@@ -14,8 +14,9 @@ Research the code as it is. Do not treat the project's AGENTS.md, README, or doc
 1. Discovery. Spawn an Explore subagent to research the codebase: the files the change touches, existing similar features to use as templates, and the surrounding structure. When the work spans independent areas, spawn one Explore subagent per area in parallel.
 2. Design. Draft the plan. Write down every question the research leaves open.
 3. Grill. Resolve those questions with the user in this session (see above). A plan may need several rounds, or none.
-4. Write. Write the plan to `plans/<slug>/plan.md`, slug named from the topic in kebab-case.
-5. Report. State the written file path and give a short summary. Do not paste the full plan.
+4. Read. Load the `writing-for-agents` skill.
+5. Write. Write the plan to `plans/<slug>/plan.md`, slug named from the topic in kebab-case.
+6. Report. State the written file path and give a short summary. Do not paste the full plan.
 
 ## Plan format
 
