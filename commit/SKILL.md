@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Create well-formed git commits.
+description: Create well-formed git commits whose messages accurately summarize every committed change.
 disable-model-invocation: true
 ---
 
@@ -8,11 +8,12 @@ Commit all local changes, structured into logical commits. Run the git commands 
 
 ## Behavior
 
-1. Analyze all local changes: `git status` for staged, unstaged, and untracked files. Treat the whole working tree as the change set.
-2. Structure the changes into commits. Default to a single `git add -A` plus one commit. Split into multiple commits only when the changes span clearly unrelated concerns (different features, different fixes, unrelated areas). When splitting, stage each group's paths separately with `git add <paths>` and commit each in turn.
-3. For each commit, generate a conventional message and run `git commit -m`.
+1. **Inspect the entire change set before choosing a message.** Run `git status --short`, then inspect both staged and unstaged content with `git diff`, `git diff --cached`, and a summary such as `git diff HEAD --stat`. Treat tracked, staged, unstaged, deleted, renamed, and untracked files as part of the change set. Do not infer the scope.
+2. **Read the actual patches.** For every changed path, identify what behavior, presentation, configuration, generated artifact, or documentation changed. If a generated file is present, trace it back to the source change and include that fact in the scope analysis. Use `git diff HEAD -- <paths>` or equivalent so staged changes are not missed.
+3. **Structure the changes into commits.** Default to a single `git add -A` plus one commit. Split into multiple commits when the changes span clearly unrelated concerns, such as separate features, fixes, or areas. When splitting, stage each group's paths separately with `git add <paths>` and commit each in turn.
+4. **Use a body when it prevents an incomplete summary.** The body should mention the major related changes that are not obvious from the subject. Keep it factual and limited to what this commit changes. Do not claim validation, behavior, or files that the patch does not support.
 
-Run the commits immediately. Do not ask for confirmation. Do not push, tag, or touch the remote in any way: local commits only.
+Run the commits immediately. Do not ask for confirmation. Do not push, tag, reset, rebase, amend, or touch the remote unless the user explicitly asks for that operation.
 
 ## Commit format
 
@@ -24,8 +25,9 @@ Run the commits immediately. Do not ask for confirmation. Do not push, tag, or t
 
 - All lowercase: type, scope, and description.
 - `<description>` is concise, imperative, one line.
-- `<scope>` names the area the change touches. Qualify until it is identifiable: a bare name that collides with another area or leaves the location unclear is not enough. Separate levels with `/`
-- Add a body only when it adds value, and describe only the changes this commit makes, other details are not needed.
+- `<scope>` names the area the change touches. Qualify until it is identifiable: a bare name that collides with another area or leaves the location unclear is not enough. Separate levels with `/`.
+- Add a body when it helps summarize multiple related aspects of the inspected patch.
+- The subject and body must reflect the actual complete patch, including generated artifacts.
 
 ## Types
 
