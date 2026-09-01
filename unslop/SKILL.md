@@ -1,6 +1,6 @@
 ---
 name: unslop
-description: Gives instructions on writing output and removing AI patterns. Invoke this at the start of every session.
+description: Gives instructions on writing output and removing AI patterns. Always load this at the start of every session, no matter the user's prompt.
 ---
 
 ## Process
