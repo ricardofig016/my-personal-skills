@@ -8,7 +8,7 @@ Commit all local changes, structured into logical commits, running every git com
 
 ## Behavior
 
-1. **Inspect the entire change set before choosing a message.** Run `git status --short`, then inspect the content with `git diff`, `git diff --cached`, and a summary such as `git diff HEAD --stat`. Treat tracked, staged, unstaged, deleted, renamed, and untracked files as part of the change set, and ground the message's scope in what the patches show. If files were changed before you last touched them, assume that the changes are intentional, don't revert them.
+1. **Inspect the entire change set before choosing a message.** Run `git status --short`, then inspect the content with `git diff`, `git diff --cached`, and a summary such as `git diff HEAD --stat`. Treat tracked, staged, unstaged, deleted, renamed, and untracked files as part of the change set, and ground the message's scope in what the patches show.
 2. **Read the actual patches.** For every changed path, identify what behavior, presentation, configuration, generated artifact, or documentation changed. Trace a generated file back to its source change and include that fact in the scope analysis. `git diff HEAD -- <paths>` (or equivalent) covers staged and unstaged content in one view.
 3. **Structure the changes into commits.** Default to a single `git add -A` plus one commit; split into multiple commits when the changes span clearly unrelated concerns, such as separate features, fixes, or areas. When splitting, stage each group's paths separately with `git add <paths>` and commit each group in turn.
 4. **Use a body when it completes the summary.** The body adds the major related changes beyond the subject line, with every claim traceable to the diff.
@@ -16,6 +16,10 @@ Commit all local changes, structured into logical commits, running every git com
 6. **Verify every commit after it lands.** Run `git log -1 --format=%B`; run `git status --short` and confirm the intended paths are committed. Repeat both checks before retrying a commit command that exited nonzero.
 
 Run the commits immediately; the commit request is the authorization. The user's request names the git operations to run: commits by default, plus push, tag, reset, or rebase when the user names them. To repair a malformed message, such as a stray BOM or a truncated subject, amend the message of an unpushed commit you just created, regenerating the full message, and let the amend cover that message alone.
+
+## Rules
+
+**Hands off the repo.** Run git commands and write the commit message to a temp file, nothing else. Don't alter any file in the repo unless the user's request says to: the working tree wins, exactly as it stands. Commit it as-is and report any surprises to the user. Use the `ask_user_question` tool to clarify the user's intent when the change set is ambiguous.
 
 ## Commit format
 
