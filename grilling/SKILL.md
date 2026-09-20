@@ -17,13 +17,13 @@ Work the tree in **rounds**. The **frontier** is every decision whose prerequisi
 
 What remains after the filter are the _decisions_ that belong to the user: taste, tradeoffs, intent, constraints only they know.
 
-Ask every round through the `ask_user_question` tool, never as free-form prose. Build one call whose `questions` array holds the whole frontier for this round, one entry per frontier question:
+Ask every round through the `ask_user_question` tool: one call whose `questions` array holds the whole frontier for this round, one entry per frontier question. Any context the user needs goes in short paragraphs (one per question) before the tool call, so each entry carries only its question:
 
 - `id`: a stable slug for the question.
-- `question`: the question body, multiple paragraphs if needed, including the choices.
+- `question`: the question, short and concise.
 - `header`: a short title for the question.
-- `options`: the choices, each with a `label` and a one-sentence `description`. Put your recommended answer first. Omit `options` when the question is genuinely open-ended.
-- `multi_select`: `true` only when the answer can legitimately include more than one option.
+- `options`: the choices, each with a `label` and a one-sentence `description`. Put your recommended answer first.
+- `multi_select`: `true` when the answer can include more than one option.
 
 Each round the user answers reshapes the tree: settled decisions push the frontier outward and unblock questions that depended on them. Recompute the frontier, reapply the filter, and ask the next round with another `ask_user_question` call. A question whose answer depends on another question still open in this round belongs to a _later_ round, not this one.
 
