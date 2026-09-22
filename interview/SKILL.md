@@ -1,11 +1,11 @@
 ---
-name: grilling
-description: Grill the user about a plan, decision, or idea. Use when the user uses any 'grill' trigger phrases or when you want to ask them a question.
+name: interview
+description: Interview the user about a plan, decision, or idea. Use when the user uses any 'interview' trigger phrases or when you ask them a question.
 ---
 
-Interview the user until you reach a shared understanding. Map this as a **design tree**: every decision branches into the decisions that hang off it.
+Interview the user until the work is fully implemented and closed. Map its decisions as a **design tree**: every decision branches into the decisions that hang off it. Don't start implementation until you reach a shared understanding.
 
-**Calibrate the interrogation to the task.** Being asked to grill is not a mandate for a fixed number of rounds. A complex, lengthy task may need several rounds working the whole tree. A simple task may need one round of two or three questions, or none, if every open point has an obvious answer. How many rounds you run is set by how many questions worth asking are left, not by the ritual.
+**Calibrate the interview to the task.** Being asked to interview is not a mandate for a fixed number of rounds. A complex, lengthy task may need several rounds working the whole tree. A simple task may need one round of two or three questions, or none, if every open point has an obvious answer. How many rounds you run is set by how many questions worth asking are left, not by the ritual.
 
 Work the tree in **rounds**. The **frontier** is every decision whose prerequisites are already settled: the questions you can ask _now_ without guessing at answers you haven't heard yet. Ask the whole frontier in one round: number each question and give your recommended answer. Then wait for the user's answers before the next round.
 
@@ -31,4 +31,6 @@ Screen every round for hidden dependencies before you send it. A question whose 
 
 When a frontier question needs a fact from the environment, dispatch a sub-agent to find it and don't block on it: a running exploration is an unsettled prerequisite, so only the questions downstream of it wait for the sub-agent to report; ask the rest of the frontier now. Some things can only be found by the user; accept that and ask them to look.
 
-The session is done when the filtered frontier is empty: every decision that would change the outcome is settled, and nothing worth asking remains. Wrap up in a sentence or two covering what was decided and what you assumed, then start acting. Do not ask the user to confirm the confirmation.
+An empty frontier is a pause, not the end of the interview. When the filtered frontier is empty and the user gives you the green light, start acting.
+
+A question that surfaces during implementation reopens the frontier. A blocker the plan didn't anticipate, a case the settled decisions don't cover: it enters the frontier like any other question and resumes the interview.

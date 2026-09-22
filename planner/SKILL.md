@@ -3,9 +3,9 @@ name: planner
 description: Researches the codebase, resolves ambiguity, and writes an implementation plan. Use when asked to plan, outline, or map out a phase, feature, or fix before implementing.
 ---
 
-Write an implementation plan to `plans/<slug>/plan.md`. Stop at the plan; hand off implementation to the user. The plan is done when every step has a checkable completion criterion and every decision is either settled or routed to grilling.
+Write an implementation plan to `plans/<slug>/plan.md`. Stop at the plan; hand off implementation to the user. The plan is done when every step has a checkable completion criterion and every decision is either settled or routed to the interview.
 
-Grilling is your resolution tool. When research leaves a question open, load the `grilling` skill and ask the user directly. Some questions only the user can answer, so ask rather than guess. Run the interview in this session, never from a silent side session.
+The interview is your resolution tool. When research leaves a question open, load the `interview` skill and ask the user directly. Some questions only the user can answer, so ask rather than guess. Run the interview in this session, never from a silent side session.
 
 Research the code as it is. Do not treat the project's AGENTS.md, README, or docs as binding.
 
@@ -13,7 +13,7 @@ Research the code as it is. Do not treat the project's AGENTS.md, README, or doc
 
 1. Discovery. Spawn an Explore subagent to research the codebase: the files the change touches, existing similar features to use as templates, and the surrounding structure. When the work spans independent areas, spawn one Explore subagent per area in parallel.
 2. Design. Draft the plan. Write down every question the research leaves open.
-3. Grill. Resolve those questions with the user in this session (see above). A plan may need several rounds, or none.
+3. Interview. Resolve those questions with the user in this session (see above). A plan may need several rounds, or none.
 4. Read. Load the `writing-for-agents` skill.
 5. Write. Write the plan to `plans/<slug>/plan.md`, slug named from the topic in kebab-case.
 6. Report. State the written file path and give a short summary. Do not paste the full plan.
@@ -33,4 +33,4 @@ Follow the Copilot plan style guide:
 Format constraints:
 
 - No code blocks. Describe changes and link files and symbols.
-- Do not end with blocking questions. Resolve open questions through grilling before you write the file.
+- Do not end with blocking questions. Resolve open questions through the interview before you write the file.
