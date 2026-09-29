@@ -8,7 +8,7 @@ Commit all local changes, structured into logical commits, running every git com
 
 ## Behavior
 
-1. **Find the repository that owns the changes.** Run `git rev-parse --show-toplevel` in the working directory. When it fails, the session workspace is not the repo: probe the directories the request touches, their subdirectories, and their parents, and work from the first that resolves. If more than one resolves, ask the user which one. Run every later git command from the repo root.
+1. **Find the repository that owns the changes.** Run `git rev-parse --show-toplevel` in the working directory. If it fails, search the workspace for nested Git roots, then probe directories the request touches and their parents. If more than one repo matches, ask which one.
 
 2. **Inspect the entire change set before choosing a message.** Run `git status --short`, then inspect the content with `git diff`, `git diff --cached`, and a summary such as `git diff HEAD --stat`. Treat tracked, staged, unstaged, deleted, renamed, and untracked files as part of the change set, and ground the message's scope in what the patches show.
 3. **Read the actual patches.** For every changed path, identify what behavior, presentation, configuration, generated artifact, or documentation changed. Trace a generated file back to its source change and include that fact in the scope analysis. `git diff HEAD -- <paths>` (or equivalent) covers staged and unstaged content in one view.
