@@ -13,14 +13,11 @@ Commit all local changes, structured into logical commits, running every git com
 2. **Inspect the entire change set before choosing a message.** Run `git status --short`, then inspect the content with `git diff`, `git diff --cached`, and a summary such as `git diff HEAD --stat`. Treat tracked, staged, unstaged, deleted, renamed, and untracked files as part of the change set, and ground the message's scope in what the patches show.
 3. **Read the actual patches.** For every changed path, identify what behavior, presentation, configuration, generated artifact, or documentation changed. Trace a generated file back to its source change and include that fact in the scope analysis. `git diff HEAD -- <paths>` (or equivalent) covers staged and unstaged content in one view.
 4. **Structure the changes into commits.** Default to a single `git add -A` plus one commit; split into multiple commits when the changes span clearly unrelated concerns, such as separate features, fixes, or areas. When splitting, stage each group's paths separately with `git add <paths>` and commit each group in turn.
-5. **Use a body when it completes the summary.** The body adds the major related changes beyond the subject line, with every claim traceable to the diff.
+5. **Reserve the body for large commits.** Use a body only when the changes are too large to summarize in the title. Trivial or single-concern changes get a title-only message; agents tend to over-use the body on small commits, so default to no body rather than looking for reasons to add one. Every body line must stay traceable to the diff.
 6. **Pass the message to Git over stdin.** Build it in PowerShell memory as an array of lines joined with LF, then pipe it to `git commit -F -`. Do not use `-m` for a multiline message (PowerShell can flatten embedded newlines in native-command arguments), and do not write a commit-message temp file:
    ```powershell
    $message = @(
      'feat(scope): description'
-     ''
-     '- first detail'
-     '- second detail'
      ''
      'Committed-by: <model-name> on behalf of Ricardo'
    ) -join "`n"
@@ -48,7 +45,7 @@ Committed-by: <model-name> on behalf of Ricardo
 - All lowercase: type, scope, and description.
 - `<description>` is concise, imperative, one line.
 - `<scope>` names the area the change touches; qualify it until it identifies exactly one area, separating levels with `/`.
-- Add a body when it helps summarize multiple related aspects of the inspected patch.
+- Leave the body out by default; add one only when the changes are too large to summarize in the title.
 - The subject and body must reflect the actual complete patch, including generated artifacts.
 - The trailer is unconditional: every commit made through this skill ends with it. `<model-name>` is your own model or agent name.
 
@@ -64,6 +61,14 @@ Committed-by: <model-name> on behalf of Ricardo
 - {custom}: for anything else
 
 ## Example
+
+```
+docs(readme): correct install command
+
+Committed-by: GLM 5.3 Flash on behalf of Ricardo
+```
+
+Title-only is the norm. A body is for large commits whose changes cannot be summarized in the title:
 
 ```
 feat(server/auth): add password reset flow
